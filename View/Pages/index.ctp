@@ -9,7 +9,10 @@
  * @copyright Copyright 2014, NetCommons Project
  */
 
-$pageContainer = Hash::combine($page['PageContainer'], '{n}.container_type', '{n}');
+$pageContainer = [];
+foreach ($page['PageContainer'] as $item) {
+	$pageContainer[$item['container_type']] = $item;
+}
 echo $this->element('Boxes.render_boxes', array(
 		'boxes' => $pageContainer[Container::TYPE_MAIN]['Box'],
 		'containerType' => Container::TYPE_MAIN

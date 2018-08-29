@@ -114,7 +114,10 @@ class PagesEditController extends PagesAppController {
 	public function index() {
 		$this->__setRedirectUrl();
 		$rooms = $this->Room->children(Current::read('Room.id'), false, 'Room.id', 'Room.rght');
-		$roomIds = Hash::merge(array(Current::read('Room.id')), Hash::extract($rooms, '{n}.Room.id'));
+		$roomIds = [Current::read('Room.id')];
+		foreach ($rooms as $room) {
+			$roomIds[] = $room['Room']['id'];
+		}
 		$this->__prepareIndex($roomIds, []);
 	}
 
