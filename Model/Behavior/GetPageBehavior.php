@@ -152,6 +152,9 @@ class GetPageBehavior extends ModelBehavior {
  * @param string $permalink Permalink
  * @param string $spaceId Space id
  * @return array
+ *
+ * 速度改善の修正に伴って発生したため抑制
+ * @SuppressWarnings(PHPMD.NPathComplexity)
  */
 	public function getPageWithFrame(Model $model, $permalink, $spaceId = null) {
 		$model->loadModels([
@@ -220,7 +223,7 @@ class GetPageBehavior extends ModelBehavior {
 				'PagesLanguage.language_id' => Current::read('Language.id'),
 			),
 		));
-		$result = Hash::merge($page, $pagesLanguages);
+		$result = $page + $pagesLanguages;
 
 		$pageContainers = $model->PageContainer->find('all', array(
 			'recursive' => -1,
@@ -229,7 +232,10 @@ class GetPageBehavior extends ModelBehavior {
 			),
 			'order' => array('container_type' => 'asc'),
 		));
-		$result['PageContainer'] = Hash::extract($pageContainers, '{n}.PageContainer');
+		$result['PageContainer'] = [];
+		foreach ($pageContainers as $pageContainer) {
+			$result['PageContainer'][] = $pageContainer['PageContainer'];
+		}
 		foreach ($result['PageContainer'] as $i => $pageContainer) {
 			$pageContainer['Box'] = $model->Box->getBoxWithFrame($pageContainer['id']);
 			$result['PageContainer'][$i] = $pageContainer;
@@ -260,7 +266,7 @@ class GetPageBehavior extends ModelBehavior {
 			)
 		));
 
-		return Hash::get($room, 'Room.page_id_top');
+		return $room['Room']['page_id_top'];
 	}
 
 /**
