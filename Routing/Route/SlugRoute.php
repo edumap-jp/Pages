@@ -24,7 +24,7 @@ class SlugRoute extends CakeRoute {
  *
  * @var array
  */
-	private $__defaultSpacePermalink = null;
+	private $__defaultSpace = null;
 
 /**
  * parse
@@ -74,8 +74,13 @@ class SlugRoute extends CakeRoute {
 		}
 		if (! isset($params['spaceId'])) {
 			$result = $this->__findDefaultSpace();
-			$params['spacePermalink'] = $result['Space']['permalink'];
-			$params['spaceId'] = $result['Space']['id'];
+			if (isset($result['Space'])) {
+				$params['spacePermalink'] = $result['Space']['permalink'];
+				$params['spaceId'] = $result['Space']['id'];
+			} else {
+				$params['spaceId'] = null;
+				$params['spacePermalink'] = null;
+			}
 		}
 
 		$path = implode('/', $params['pass']);
@@ -120,15 +125,15 @@ class SlugRoute extends CakeRoute {
  * @return array
  */
 	private function __findDefaultSpace() {
-		if ($this->__defaultSpacePermalink) {
-			return $this->__defaultSpacePermalink;
+		if ($this->__defaultSpace) {
+			return $this->__defaultSpace;
 		} else {
 			$result = $this->Space->cacheFindQuery('first', array(
 				'fields' => ['id', 'permalink'],
 				'conditions' => array('permalink' => '', 'id !=' => Space::WHOLE_SITE_ID),
 				'recursive' => -1
 			));
-			$this->__defaultSpacePermalink = $result;
+			$this->__defaultSpace = $result;
 		}
 
 		return $result;
