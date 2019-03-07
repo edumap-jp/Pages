@@ -95,7 +95,7 @@ class PagesController extends PagesAppController {
 		if (empty($pageId)) {
 			throw new NotFoundException();
 		}
-		$page = $this->CurrentLibPage->findCurrentPage();
+		$page = $this->CurrentLibPage->findCurrentPageWithContainer();
 
 //CakeLog::debug(__METHOD__ . '(' . __LINE__ . ') ' . var_export($page, true));
 		$this->set('page', $page);

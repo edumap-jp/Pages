@@ -58,7 +58,7 @@ class PageLayoutComponent extends Component {
 		if (!self::$_page) {
 			//pathからページデータ取得
 			if (! isset($controller->viewVars['page'])) {
-				self::$_page = CurrentLibPage::getInstance()->findCurrentPage();
+				self::$_page = CurrentLibPage::getInstance()->findCurrentPageWithContainer();
 			} else {
 				self::$_page = $controller->viewVars['page'];
 			}
