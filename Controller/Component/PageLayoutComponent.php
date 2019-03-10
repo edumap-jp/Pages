@@ -10,7 +10,7 @@
  */
 
 App::uses('Component', 'Controller');
-App::uses('PagesLanguage', 'Pages.Model');
+App::uses('CurrentLibPage', 'NetCommons.Lib/Current');
 
 /**
  * ページLayout Component
@@ -58,14 +58,7 @@ class PageLayoutComponent extends Component {
 		if (!self::$_page) {
 			//pathからページデータ取得
 			if (! isset($controller->viewVars['page'])) {
-				$this->Page = ClassRegistry::init('Pages.Page');
-				$page = $this->Page->getPageWithFrame(
-					Current::read('Page.permalink'), Current::read('Space.id')
-				);
-				if (empty($page)) {
-					throw new NotFoundException();
-				}
-				self::$_page = $page;
+				self::$_page = CurrentLibPage::getInstance()->findCurrentPageWithContainer();
 			} else {
 				self::$_page = $controller->viewVars['page'];
 			}
@@ -114,6 +107,8 @@ class PageLayoutComponent extends Component {
  * @return void
  */
 	public function setMeta(Controller $controller) {
+		App::uses('PagesLanguage', 'Pages.Model');
+
 		//メタデータのセット
 		$meta['title'] = Hash::get(
 			$controller->viewVars['page'],

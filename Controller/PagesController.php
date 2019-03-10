@@ -12,6 +12,7 @@
 App::uses('PagesAppController', 'Pages.Controller');
 App::uses('Space', 'Rooms.Model');
 App::uses('NetCommonsUrl', 'NetCommons.Utility');
+App::uses('CurrentLibPage', 'NetCommons.Lib/Current');
 
 /**
  * ページ表示 Controller
@@ -56,6 +57,8 @@ class PagesController extends PagesAppController {
 			$this->request->params['pageView'] = true;
 		}
 		parent::beforeFilter();
+
+		$this->CurrentLibPage = CurrentLibPage::getInstance();
 	}
 
 /**
@@ -68,7 +71,8 @@ class PagesController extends PagesAppController {
 		if (Current::isSettingMode() && ! Current::permission('page_editable')) {
 			$paths = $this->params->params['pass'];
 			$path = implode('/', $paths);
-			Current::isSettingMode(false);
+//			Current::isSettingMode(false);
+			Current::setSettingMode(false);
 			return $this->redirect('/' . $path);
 		}
 
@@ -82,10 +86,18 @@ class PagesController extends PagesAppController {
 			'conditions' => array('permalink' => $spacePermalink, 'id !=' => Space::WHOLE_SITE_ID)
 		));
 
-		$page = $this->Page->getPageWithFrame($path, $space['Space']['id']);
-		if (empty($page)) {
+//		$page = $this->Page->getPageWithFrame($path, $space['Space']['id']);
+//		if (empty($page)) {
+//			throw new NotFoundException();
+//		}
+
+		$pageId = $this->CurrentLibPage->getPageIdByPermalink($path, $space['Space']['id']);
+		if (empty($pageId)) {
 			throw new NotFoundException();
 		}
+		$page = $this->CurrentLibPage->findCurrentPageWithContainer();
+
+//CakeLog::debug(__METHOD__ . '(' . __LINE__ . ') ' . var_export($page, true));
 		$this->set('page', $page);
 	}
 
@@ -100,7 +112,9 @@ class PagesController extends PagesAppController {
 		} else {
 			$settingMode = false;
 		}
-		$isSettingMode = Current::isSettingMode($settingMode);
+		Current::setSettingMode($settingMode);
+		$isSettingMode = Current::isSettingMode();
+//		$isSettingMode = Current::isSettingMode($settingMode);
 		if ($isSettingMode) {
 			$redirectUrl = NetCommonsUrl::backToPageUrl(true);
 		} else {
