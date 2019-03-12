@@ -115,14 +115,14 @@ class PageLayoutHelperHasContainerTest extends PagesHelperTestCase {
 	public function testHasContainerWOFrameOnSettingMode() {
 		//データ生成
 		$containerType = Container::TYPE_MAIN;
-		Current::isSettingMode(true);
+		Current::setSettingMode(true);
 
 		//テスト実施
 		$result = $this->PageLayout->hasContainer($containerType);
 
 		//チェック
 		$this->assertTrue($result);
-		Current::isSettingMode(false);
+		Current::setSettingMode(false);
 	}
 
 }

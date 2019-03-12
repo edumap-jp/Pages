@@ -57,8 +57,12 @@ class PageSaveTest extends PagesModelTestCase {
 		$data['Page']['permalink'] = 'test2_upd';
 
 		//テスト実施
-		$this->$model->Behaviors->unload('Pages.SavePage');
-		$this->$model->Behaviors->unload('Pages.PageAssociations');
+		if ($this->$model->Behaviors->loaded('Pages.SavePage')) {
+			//$this->$model->Behaviors->unload('Pages.SavePage');
+		}
+		if ($this->$model->Behaviors->loaded('Pages.PageAssociations')) {
+			//$this->$model->Behaviors->unload('Pages.PageAssociations');
+		}
 
 		return $data;
 	}
@@ -80,6 +84,7 @@ class PageSaveTest extends PagesModelTestCase {
 
 		//チェック
 		$expected = $data;
+		$expected['Page']['is_container_fluid'] = false;
 		unset($result['Page']['modified']);
 		$this->assertEquals($expected, $result);
 

@@ -151,6 +151,8 @@ class PagesEditControllerMetaTest extends PagesControllerTestCase {
 		$this->_mockForReturnCallback('Pages.PagesLanguage', 'savePagesLanguage', function () {
 			$message = sprintf(__d('net_commons', 'Please input %s.'), __d('pages', 'Title tag'));
 			$this->controller->PagesLanguage->invalidate('meta_title', $message);
+
+			ClassRegistry::addObject('PagesLanguage', $this->controller->PagesLanguage);
 			return false;
 		});
 
