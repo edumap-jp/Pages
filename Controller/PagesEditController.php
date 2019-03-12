@@ -78,17 +78,21 @@ class PagesEditController extends PagesAppController {
  * @return void
  */
 	public function beforeFilter() {
-		//CurrentPage::__getPageConditionsでページ設定として扱う
+		//ページ設定として扱う
 		$this->request->params['pageEdit'] = true;
 		parent::beforeFilter();
 
 		//ルームデータ取得
-		$conditions = array('Room.id' => Current::read('Room.id'));
+		//※beforeFilterでは、存在しなかった場合、トップページとして処理されるが、
+		//　ここでは、エラーとするため、再取得して、チェックする
+		$roomId = $this->request->params['pass'][0];
+		$conditions = array('Room.id' => $roomId);
 		$room = $this->Room->find('first', $this->Room->getReadableRoomsConditions($conditions));
 		if (! $room) {
 			return $this->setAction('throwBadRequest');
 		}
 		$this->set('room', $room);
+
 		if (Current::read('Space.room_id_root')) {
 			$this->Room->unbindModel(array(
 				'belongsTo' => array('ParentRoom'),
