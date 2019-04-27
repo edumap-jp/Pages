@@ -113,6 +113,7 @@ class PageLayoutHelper extends AppHelper {
 		$this->containers = self::$_containers;
 
 		if (! self::$_plugins || $isTestMock) {
+			self::$_plugins = [];
 			$pluginRooms = Current::read('PluginsRoom', array());
 			foreach ($pluginRooms as $plugin) {
 				self::$_plugins[$plugin['Plugin']['key']] = $plugin['Plugin'];
