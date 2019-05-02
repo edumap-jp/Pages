@@ -180,15 +180,4 @@ class PageLayoutComponentBeforeRenderTest extends PagesControllerTestCase {
 		$this->assertFalse(in_array('Pages.PageLayout', $this->controller->helpers, true));
 	}
 
-/**
- * ExceptionErrorのテスト
- *
- * @return void
- */
-	public function testBeforeRenderOnExceptionError() {
-		//テスト実行
-		$this->_mockForReturnFalse('Pages.Page', 'getPageWithFrame');
-		$this->_testGetAction('/test_pages/test_page_layout_component/index_wo_page?frame_id=6', null, 'NotFoundException', 'view');
-	}
-
 }

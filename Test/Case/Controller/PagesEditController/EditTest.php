@@ -183,6 +183,8 @@ class PagesEditControllerEditTest extends PagesControllerTestCase {
 
 			$message = sprintf(__d('net_commons', 'Please input %s.'), __d('pages', 'Slug'));
 			$this->controller->Page->invalidate('permalink', $message);
+
+			ClassRegistry::addObject('Page', $this->controller->Page);
 			return false;
 		});
 
