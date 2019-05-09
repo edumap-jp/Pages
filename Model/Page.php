@@ -236,7 +236,7 @@ class Page extends PagesAppModel {
 			$themeNames[] = $theme['name'];
 		}
 
-		$this->validate = Hash::merge($this->validate, array(
+		$this->validate = ValidateMerge::merge($this->validate, array(
 			'slug' => array(
 				'notBlank' => array(
 					'rule' => array('notBlank'),
