@@ -37,7 +37,8 @@ class SlugRoute extends CakeRoute {
  * @SuppressWarnings(PHPMD.NPathComplexity)
  */
 	public function parse($url) {
-		$params = parent::parse($url);
+		$currentRequest = Router::getRequest(true);
+		$params = parent::parse($currentRequest->here);
 
 		if (empty($params)) {
 			return false;
