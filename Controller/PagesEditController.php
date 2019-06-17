@@ -232,6 +232,13 @@ class PagesEditController extends PagesAppController {
 		if ($this->request->is('put')) {
 			//登録処理
 			$this->request->data['Page']['slug'] = Hash::get($this->request->data, 'Page.permalink');
+
+			// 親ルームのpermalinkと階層になるように対応
+			// beforeFilterで必ずセットされる parentPermalink を利用. parentPermalinkは頭に / 付のため、取り除く
+			// permalinkのvalidateもあるため、validate前にpermalinkを変換してセット
+			$this->request->data['Page']['permalink'] =
+				ltrim($this->viewVars['parentPermalink']) . $this->request->data['Page']['slug'];
+
 			$page = $this->Page->savePage($this->request->data);
 			if ($page) {
 				//正常の場合
