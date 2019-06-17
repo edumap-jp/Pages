@@ -605,7 +605,7 @@ class PagesEditController extends PagesAppController {
 			$page = Hash::get($this->request->data, 'Page', $page);
 			unset($page['id']);
 		}
-		$parentPermalink = '/' . $this->Page->getTopPagePermalink($page);
+		$parentPermalink = '/' . $this->Page->getParentPermalink($page);
 
 		// コミュニティルームのトップの場合、/ のみのため除去する。ここで除去しないと /community//になる
 		if ($parentPermalink === '/') {

@@ -306,13 +306,13 @@ class GetPageBehavior extends ModelBehavior {
 	}
 
 /**
- * ルーム内先頭のPage.permalinkを取得
+ * 親ページのPage.permalinkを取得
  *
  * @param Model $model Model using this behavior
  * @param array $page Page data
  * @return string ルーム内先頭のPage.permalink
  */
-	public function getTopPagePermalink(Model $model, $page) {
+	public function getParentPermalink(Model $model, $page) {
 		// ・パブリックのトップIDの空返却は、ページ下ページで空返却してしまうため、削る
 		// ・Room.page_id_topとpage_idが同じで空返却は、サブルームも空返却してしまうため、削る
 		//if ($page['room_id'] === Space::getRoomIdRoot(Space::PUBLIC_SPACE_ID) ||
