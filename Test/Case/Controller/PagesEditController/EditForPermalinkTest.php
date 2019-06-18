@@ -101,9 +101,15 @@ class PagesEditControllerEditForPermalinkTest extends PagesControllerTestCase {
 		Current::write('Space.permalink', 'dummy');
 		$result = $this->testAction('/pages/pages_edit/edit/5/9', ['return' => 'vars']);
 
-		$expected = '/' .
-			Current::read('Space.permalink') . '/' .
-			'test2/';
+		// Current::read('Space.permalink')が空の場合を考慮。空だと//test2/になり変なテストケースになっていたため、
+		// 空確認のif文追加
+		if (Current::read('Space.permalink')) {
+			$expected = '/' .
+				Current::read('Space.permalink') . '/' .
+				'test2/';
+		} else {
+			$expected = '/test2/';
+		}
 		$this->assertEquals($expected, $result['parentPermalink']);
 
 		Current::$current = [];
