@@ -52,4 +52,38 @@ class RoutesTest extends NetCommonsRoutesTestCase {
 		);
 	}
 
+/**
+ * ルーティングのテスト
+ *
+ * @param string $url URL
+ * @param bool|array $expected 期待値
+ * @param bool $settingMode セッティングモード
+ * @dataProvider dataProvider
+ * @return void
+ * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+ */
+	public function testRoutes($url, $expected, $settingMode = false) {
+		// 下記からコピー
+		// NC3\app\vendors\cakephp\cakephp\lib\Cake\Test\Case\Routing\RouterTest.php::testSetRequestInfoLegacy()
+		$request = array(
+			array(
+				'plugin' => 'pages', 'controller' => 'page_edit', 'action' => 'index',
+				'url' => array('url' => $url)
+			),
+			array(
+				'base' => '',
+				'here' => '/' . $url,
+				'webroot' => '/',
+			)
+		);
+		// 下記からコピー
+		// NC3\app\vendors\cakephp\cakephp\lib\Cake\Routing\Router.php::setRequestInfo()
+		$requestObj = new CakeRequest($url);
+		$request += array(array(), array());
+		$request[0] += array('controller' => false, 'action' => false, 'plugin' => null);
+		$requestObj->addParams($request[0])->addPaths($request[1]);
+		Router::setRequestInfo($requestObj);
+
+		parent::testRoutes($url, $expected, $settingMode);
+	}
 }

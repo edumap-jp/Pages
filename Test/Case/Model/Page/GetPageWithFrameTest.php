@@ -44,6 +44,7 @@ class PageGetPageWithFrameTest extends PagesGetTestCase {
  * getPageWithFrame()のテスト
  *
  * @return void
+ * @see GetPageBehavior::getPageWithFrame()
  */
 	public function testGetPageWithFrame() {
 		$model = $this->_modelName;

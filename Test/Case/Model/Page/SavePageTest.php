@@ -69,6 +69,9 @@ class PageSavePageTest extends NetCommonsSaveTest {
  */
 	public function dataProviderSave() {
 		$data['Page'] = Hash::extract((new Page4pagesFixture())->records, '{n}[id=7]')[0];
+		// homeページ下ページなら、permalinkは home/test4 になるようバグ修正したため、テストケースも修正
+		$data['Page']['permalink'] = 'home/test4';
+
 		$data['Room']['id'] = '2';
 		$data['Room']['space_id'] = '2';
 
@@ -78,7 +81,9 @@ class PageSavePageTest extends NetCommonsSaveTest {
 		// * 新規の登録処理
 		$results[1] = array($data);
 		$results[1][0]['Page']['id'] = null;
-		$results[1][0]['Page']['permalink'] = 'insert_key';
+		// homeページ下ページなら、permalinkは home/insert_key になるようバグ修正したため、テストケースも修正
+		//$results[1][0]['Page']['permalink'] = 'insert_key';
+		$results[1][0]['Page']['permalink'] = 'home/insert_key';
 		$results[1][0]['Page']['slug'] = 'insert_key';
 		unset($results[1][0]['Page']['created_user']);
 
