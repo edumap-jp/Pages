@@ -51,7 +51,7 @@ class PagesRoutingRouteSlugRouteParseTest extends PagesModelTestCase {
  */
 	public function dataProvider() {
 		return array(
-			// * 「/setting/」のケース
+			// * 「/setting/」のケース #0
 			array('template' => '/' . Current::SETTING_MODE_WORD . '/', 'url' => '/',
 				'expected' => false
 			),
@@ -86,9 +86,11 @@ class PagesRoutingRouteSlugRouteParseTest extends PagesModelTestCase {
 			array('template' => '/' . Current::SETTING_MODE_WORD . '/*', 'url' => '/test_pages/test_page/index',
 				'expected' => false
 			),
+			// #11
 			array('template' => '/' . Current::SETTING_MODE_WORD . '/*', 'url' => '/setting/',
 				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array())
 			),
+			// #12 - テストエラー解消できず。ごめんギブアップ
 			array('template' => '/' . Current::SETTING_MODE_WORD . '/*', 'url' => '/setting/test4/',
 				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array('test4'))
 			),
@@ -99,6 +101,7 @@ class PagesRoutingRouteSlugRouteParseTest extends PagesModelTestCase {
 			array('template' => '/*', 'url' => '/',
 				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array())
 			),
+			// #15 - テストエラー解消できず。ごめんギブアップ
 			array('template' => '/*', 'url' => '/test4/',
 				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array('test4'))
 			),
@@ -130,6 +133,27 @@ class PagesRoutingRouteSlugRouteParseTest extends PagesModelTestCase {
  * @return void
  */
 	public function testParse($template, $url, $expected) {
+		// 下記からコピー
+		// NC3\app\vendors\cakephp\cakephp\lib\Cake\Test\Case\Routing\RouterTest.php::testSetRequestInfoLegacy()
+		$request = array(
+			array(
+				'plugin' => 'pages', 'controller' => 'pages', 'action' => 'index',
+				'url' => array('url' => 'pages/pages/index')
+			),
+			array(
+				'base' => '',
+				'here' => '/pages/pages/index',
+				'webroot' => '/',
+			)
+		);
+		// 下記からコピー
+		// NC3\app\vendors\cakephp\cakephp\lib\Cake\Routing\Router.php::setRequestInfo()
+		$requestObj = new CakeRequest($url);
+		$request += array(array(), array());
+		$request[0] += array('controller' => false, 'action' => false, 'plugin' => null);
+		$requestObj->addParams($request[0])->addPaths($request[1]);
+		Router::setRequestInfo($requestObj);
+
 		//テスト実施
 		$route = new SlugRoute($template,
 			array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index')
