@@ -69,6 +69,9 @@ class PageSavePageTest extends NetCommonsSaveTest {
  */
 	public function dataProviderSave() {
 		$data['Page'] = Hash::extract((new Page4pagesFixture())->records, '{n}[id=7]')[0];
+		// homeページ下ページなら、permalinkは home/test4 になるようバグ修正したため、テストケースも修正
+		$data['Page']['permalink'] = 'home/test4';
+
 		$data['Room']['id'] = '2';
 		$data['Room']['space_id'] = '2';
 
