@@ -90,7 +90,7 @@ class PagesRoutingRouteSlugRouteParseTest extends PagesModelTestCase {
 			array('template' => '/' . Current::SETTING_MODE_WORD . '/*', 'url' => '/setting/',
 				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array())
 			),
-			// #12 - テストエラー解消できず。ごめんギブアップ
+			// #12
 			array('template' => '/' . Current::SETTING_MODE_WORD . '/*', 'url' => '/setting/test4/',
 				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array('test4'))
 			),
@@ -101,7 +101,7 @@ class PagesRoutingRouteSlugRouteParseTest extends PagesModelTestCase {
 			array('template' => '/*', 'url' => '/',
 				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array())
 			),
-			// #15 - テストエラー解消できず。ごめんギブアップ
+			// #15
 			array('template' => '/*', 'url' => '/test4/',
 				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array('test4'))
 			),
