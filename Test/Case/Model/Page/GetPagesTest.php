@@ -128,15 +128,11 @@ class PageGetPagesTest extends PagesGetTestCase {
 			array('id' => '2', 'parent_id' => '1'),
 			array('id' => '1', 'room_id' => '2', 'parent_id' => null),
 			array(
-				// homeページ下ページなら、permalinkは home/test4 になるようバグ修正したため、テストケースも修正
-				//array('id' => '7', 'room_id' => '2', 'parent_id' => '4', 'permalink' => 'test4')
-				array('id' => '7', 'room_id' => '2', 'parent_id' => '4', 'permalink' => 'home/test4')
+				array('id' => '7', 'room_id' => '2', 'parent_id' => '4', 'permalink' => 'test4')
 			)
 		);
 		$this->__assertGetPages($result,
-			// homeページ下ページなら、permalinkは home/test4 になるようバグ修正したため、テストケースも修正
-			//array('id' => '7', 'permalink' => 'test4'),
-			array('id' => '7', 'permalink' => 'home/test4'),
+			array('id' => '7', 'permalink' => 'test4'),
 			array('id' => '2', 'parent_id' => '1'),
 			array('id' => '4', 'room_id' => '2', 'parent_id' => '1'),
 			array()
