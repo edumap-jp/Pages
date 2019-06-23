@@ -53,11 +53,14 @@ class SavePageBehavior extends ModelBehavior {
 		}
 		$model->data['Page']['slug'] = $slug;
 
-		$permalink = Hash::get(
-			$model->data,
-			'Page.permalink',
-			$model->getTopPagePermalink($model->data['Page']) . '/' . $slug
-		);
+		// ページのpermalinkは、ここで親ページのpermalink + 入力したpermalink=slug を連結する事で、初めてpermalink
+		// として機能する文字列になるため、必ず$model->getParentPermalink()を通す
+		//$permalink = Hash::get(
+		//	$model->data,
+		//	'Page.permalink',
+		//	$model->getParentPermalink($model->data['Page']) . '/' . $slug
+		//);
+		$permalink = $model->getParentPermalink($model->data['Page']) . '/' . $slug;
 		if (substr($permalink, 0, 1) === '/') {
 			$permalink = substr($permalink, 1);
 		}

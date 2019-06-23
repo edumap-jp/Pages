@@ -152,6 +152,10 @@ class PagesEditController extends PagesAppController {
 			$this->request->data = $this->Page->createPage();
 			$this->request->data['Room'] = Current::read('Room');
 			$this->request->data['_NetCommonsUrl']['redirect'] = $this->__getRedirectUrl();
+
+			// $this->__setParentPageName()の中で使ってるCurrent::read('Page')は、$this->Page->createPage(); で書き換わるため
+			// parentPathの名前を再セット
+			$this->__setParentPageName();
 		}
 	}
 
@@ -596,14 +600,19 @@ class PagesEditController extends PagesAppController {
 
 		$page = Current::read('Page');
 		if ($this->params['action'] === 'add') {
+			// Current::read('Page')は、$this->add()の $this->request->data = $this->Page->createPage(); で書き換わるため
+			// add action時は、$this->request->dataのPageデータから取得する
+			$page = Hash::get($this->request->data, 'Page', $page);
 			unset($page['id']);
 		}
-		$parentPermalink = '/' . $this->Page->getTopPagePermalink($page);
-		if (Current::read('Space.permalink')) {
-			$parentPermalink = '/' . Current::read('Space.permalink') . $parentPermalink;
-		}
+		$parentPermalink = '/' . $this->Page->getParentPermalink($page);
+
+		// コミュニティルームのトップの場合、/ のみのため除去する。ここで除去しないと /community//になる
 		if ($parentPermalink === '/') {
 			$parentPermalink = '';
+		}
+		if (Current::read('Space.permalink')) {
+			$parentPermalink = '/' . Current::read('Space.permalink') . $parentPermalink;
 		}
 
 		$this->set('parentPermalink', $parentPermalink . '/');

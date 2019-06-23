@@ -103,45 +103,45 @@ class PagesEditControllerMetaTest extends PagesControllerTestCase {
 		);
 		return $data;
 	}
-//
-///**
-// * meta()アクションのPOSTリクエストテスト
-// *
-// * @return void
-// */
-//	public function testPost() {
-//		//テストデータ
-//		$roomId = '2';
-//		$pageId = '4';
-//
-//		$this->_mockForReturnTrue('Pages.PagesLanguage', 'savePagesLanguage');
-//
-//		$this->controller->Components->Flash
-//			->expects($this->once())->method('set')
-//			->with(__d('net_commons', 'Successfully saved.'));
-//
-//		//テスト実行
-//		$this->_testPostAction('put', $this->__data(),
-//				array('action' => 'meta', $roomId, $pageId), null, 'view');
-//
-//		//チェック
-//		$header = $this->controller->response->header();
-//		$this->assertTextContains('/pages/pages_edit/index/2/20', $header['Location']);
-//	}
-//
-///**
-// * meta()アクションのexistPage()のエラーテスト
-// *
-// * @return void
-// */
-//	public function testOnExceptionError() {
-//		$roomId = '2';
-//		$pageId = '4';
-//		$this->_mockForReturnFalse('Pages.Page', 'existPage');
-//
-//		//テスト実行
-//		$this->_testGetAction(array('action' => 'meta', $roomId, $pageId), null, 'BadRequestException', 'view');
-//	}
+
+	///**
+	// * meta()アクションのPOSTリクエストテスト
+	// *
+	// * @return void
+	// */
+	//	public function testPost() {
+	//		//テストデータ
+	//		$roomId = '2';
+	//		$pageId = '4';
+	//
+	//		$this->_mockForReturnTrue('Pages.PagesLanguage', 'savePagesLanguage');
+	//
+	//		$this->controller->Components->Flash
+	//			->expects($this->once())->method('set')
+	//			->with(__d('net_commons', 'Successfully saved.'));
+	//
+	//		//テスト実行
+	//		$this->_testPostAction('put', $this->__data(),
+	//				array('action' => 'meta', $roomId, $pageId), null, 'view');
+	//
+	//		//チェック
+	//		$header = $this->controller->response->header();
+	//		$this->assertTextContains('/pages/pages_edit/index/2/20', $header['Location']);
+	//	}
+	//
+	///**
+	// * meta()アクションのexistPage()のエラーテスト
+	// *
+	// * @return void
+	// */
+	//	public function testOnExceptionError() {
+	//		$roomId = '2';
+	//		$pageId = '4';
+	//		$this->_mockForReturnFalse('Pages.Page', 'existPage');
+	//
+	//		//テスト実行
+	//		$this->_testGetAction(array('action' => 'meta', $roomId, $pageId), null, 'BadRequestException', 'view');
+	//	}
 
 /**
  * ValidationErrorテスト
