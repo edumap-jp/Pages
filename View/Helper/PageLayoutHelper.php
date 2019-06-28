@@ -269,7 +269,6 @@ class PageLayoutHelper extends AppHelper {
 					'frame' => $frame,
 					'view' => $this->_View->fetch('content'),
 					'centerContent' => true,
-					'containerType' => Current::read('BoxesPageContainer.container_type'),
 					'box' => array(
 						'Box' => Current::read('Box'),
 						'BoxesPageContainer' => Current::read('BoxesPageContainer'),
