@@ -62,7 +62,7 @@ if (AuthComponent::user()) {
 			<?php echo $pageFooter; ?>
 		</main>
 
-		<?php echo $this->element('NetCommons.common_footer'); ?>
+		<?php echo $this->element('Pages.common_footer'); ?>
 
 		<?php if (!empty($modal)) : ?>
 			<div class="modal-backdrop fade in"></div>
