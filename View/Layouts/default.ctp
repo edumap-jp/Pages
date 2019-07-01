@@ -38,7 +38,7 @@ if (AuthComponent::user()) {
 			echo $this->element('NetCommons.common_theme_css');
 
 			echo $this->element('NetCommons.common_js');
-			//echo $this->element('Wysiwyg.mathjax_js');
+			echo $this->element('Wysiwyg.mathjax_js');
 			echo $this->fetch('script');
 		?>
 	</head>
@@ -46,7 +46,7 @@ if (AuthComponent::user()) {
 	<body class="<?php echo $bodyCss; ?>" ng-controller="NetCommons.base">
 		<?php echo $this->Flash->render(); ?>
 
-		<?php echo $this->element('NetCommons.common_header', ['navbarStyle' => 'navbar-default']); ?>
+		<?php echo $this->element('NetCommons.common_header'); ?>
 
 		<main id="nc-container" class="<?php echo $pageContainerCss; ?>" ng-init="hashChange()">
 			<?php echo $pageHeader; ?>
