@@ -20,7 +20,7 @@ echo $this->NetCommonsHtml->css('/pages/css/style.css');
 		<?php echo $this->NetCommonsForm->create('Page',
 				array(
 					'type' => 'put',
-					'url' => NetCommonsUrl::actionUrlAsArray(array('action' => 'move'))
+					'url' => NetCommonsUrl::actionUrlAsArray(array('action' => 'move', Current::read('Room.id')))
 				)
 			); ?>
 
