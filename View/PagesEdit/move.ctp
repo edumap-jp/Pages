@@ -16,7 +16,7 @@
 
 <?php echo $this->NetCommonsForm->create('Page', array(
 		'type' => 'put',
-		'url' => NetCommonsUrl::actionUrlAsArray(array('action' => 'move'))
+		'url' => NetCommonsUrl::actionUrlAsArray(array('action' => 'move', Current::read('Room.id')))
 	)); ?>
 
 	<?php echo $this->NetCommonsForm->hidden('_NetCommonsUrl.redirect'); ?>
