@@ -66,7 +66,7 @@ if (AuthComponent::user()) {
 		<?php
 			$trackingId = SiteSettingUtil::read('Matomo.tracking_id');
 			if ($trackingId) {
-				echo $this->element('Pages.matomo_tracking');
+				echo $this->element('Pages.matomo_tracking', ['trackingId' => $trackingId]);
 			}
 		?>
 
