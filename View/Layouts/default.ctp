@@ -63,6 +63,12 @@ if (AuthComponent::user()) {
 		</main>
 
 		<?php echo $this->element('Pages.common_footer'); ?>
+		<?php
+			$trackingId = SiteSettingUtil::read('Matomo.tracking_id');
+			if ($trackingId) {
+				echo $this->element('Pages.matomo_tracking');
+			}
+		?>
 
 		<?php if (!empty($modal)) : ?>
 			<div class="modal-backdrop fade in"></div>
