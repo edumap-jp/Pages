@@ -10,7 +10,7 @@
 ?>
 <footer id="nc-system-footer" role="contentinfo">
 	<div class="box-footer">
-		<div class="copyright">Powered by 教育のための科学研究所、NTTデータ、さくらインターネット</div>
+		<div class="copyright">Powered by edumap</div>
 	</div>
 </footer>
 
