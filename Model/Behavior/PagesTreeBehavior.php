@@ -100,4 +100,151 @@ class PagesTreeBehavior extends NetCommonsTreeBehavior {
 		return $results;
 	}
 
+/**
+ * 破損したツリーを復元する
+ *
+ * @param Model $model 呼び出し元のModel
+ * @param string $mode parentのみ
+ * @param null $missingParentAction 使用しない
+ * @return bool true on success, false on failure
+ * @SuppressWarnings(PHPMD.CyclomaticComplexity)
+ * @link https://book.cakephp.org/2.0/ja/core-libraries/behaviors/tree.html#TreeBehavior::recover
+ */
+	public function recover(Model $model, $mode = 'parent', $missingParentAction = null) {
+		$settings = $this->settings[$model->alias];
+
+		if (! $model->hasField($settings['parent']) &&
+				! $model->hasField($settings['weight']) &&
+				! $model->hasField($settings['sort_key']) &&
+				! $model->hasField($settings['child_count'])) {
+			return true;
+		}
+
+		$trees = $model->find('all', [
+			'recursive' => -1,
+			'fields' => [$model->primaryKey, $settings['parent'], $settings['weight']],
+			'order' => [
+				$settings['parent'] => 'asc',
+				$settings['weight'] => 'asc',
+				$model->primaryKey => 'asc',
+			],
+		]);
+
+		$maxWeights = $model->find('all', [
+			'recursive' => -1,
+			'fields' => [$settings['parent'], 'Max(' . $settings['weight'] . ')'],
+			'group' => [
+				$settings['parent'],
+			],
+		]);
+
+		$weights = [];
+		foreach ($maxWeights as $weight) {
+			$parentId = (string)$weight[$model->alias][$settings['parent']];
+
+			//if (isset($weight[0]['Max(weight)'])) {
+			//	$weights[$parentId] = (int)$weight[0]['Max(weight)'];
+			//} else {
+				$weights[$parentId] = 0;
+			//}
+		}
+
+		$recovers = [];
+		foreach ($trees as $tree) {
+			$parentId = $tree[$model->alias][$settings['parent']];
+			$primaryId = $tree[$model->alias][$model->primaryKey];
+
+			if ($parentId === $primaryId) {
+				$parentId = '1';
+			}
+
+			//if ($tree[$model->alias][$settings['weight']]) {
+			//	$weight = $tree[$model->alias][$settings['weight']];
+			//} else {
+				$weights[$parentId]++;
+				$weight = $weights[$parentId];
+			//}
+
+			if (! $parentId) {
+				$sortKey = $this->_convertWeightToSortKey($weight, false, false);
+			} else {
+				if (! isset($recovers[$parentId])) {
+					continue;
+				}
+				$sortKey = $this->_convertWeightToSortKey($weight, $recovers[$parentId]['sort_key'], true);
+			}
+			$recovers[$primaryId] = [
+				'parent_id' => $parentId,
+				'weight' => $weight,
+				'sort_key' => $sortKey,
+				'child_count' => 0,
+			];
+
+			$this->__countUpForRecover($recovers, $parentId);
+
+			$weights[$parentId] = $weight;
+		}
+CakeLog::debug(__METHOD__ . '(' . __LINE__ . ') ' . var_export($recovers, true));
+
+		$this->__updateRecovers($model, $recovers);
+
+		return true;
+	}
+
+/**
+ * 子供の件数のUP
+ *
+ * @param array &$recovers データ配列
+ * @param int $parentId 親ID
+ * @return void
+ */
+	private function __countUpForRecover(&$recovers, $parentId) {
+		if (! $parentId) {
+			return;
+		}
+		if (isset($recovers[$parentId])) {
+			$recovers[$parentId]['child_count']++;
+		}
+		$this->__countUpForRecover($recovers, $recovers[$parentId]['parent_id']);
+	}
+
+/**
+ * CakeのTreeビヘイビアからNC用のTreeビヘイビアのデータ構成にマイグレーションする
+ *
+ * @param Model $model Model using this behavior
+ * @param array $recovers リカバリーデータ
+ * @return bool
+ * @throws InternalErrorException
+ */
+	private function __updateRecovers(Model $model, $recovers) {
+		$escapeFields = $this->_escapeFields[$model->alias];
+
+		$model->unbindModel(['belongsTo' => array_keys($model->belongsTo)]);
+		foreach ($recovers as $primaryId => $recover) {
+			if (! empty($recover['parent_id'])) {
+				$update = [
+					'Page.parent_id' => $recover['parent_id'],
+					$escapeFields['weight'] => $recover['weight'],
+					$escapeFields['sort_key'] => '\'' . $recover['sort_key'] . '\'',
+					$escapeFields['child_count'] => $recover['child_count'],
+				];
+			} else {
+				$update = [
+					$escapeFields['weight'] => $recover['weight'],
+					$escapeFields['sort_key'] => '\'' . $recover['sort_key'] . '\'',
+					$escapeFields['child_count'] => $recover['child_count'],
+				];
+			}
+			$conditions = [
+				$escapeFields['id'] => $primaryId
+			];
+			if (! $model->updateAll($update, $conditions)) {
+				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
+			}
+		}
+		$model->resetAssociations();
+
+		return true;
+	}
+
 }

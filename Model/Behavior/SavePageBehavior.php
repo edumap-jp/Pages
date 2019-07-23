@@ -254,6 +254,8 @@ class SavePageBehavior extends ModelBehavior {
 			//パブリックスペースで、移動したものが先頭になった場合、Room.page_id_topを更新する
 			$this->__updatePageIdTopMove($model, $data);
 
+			$model->recover();
+
 			$model->commit();
 
 		} catch (Exception $ex) {
