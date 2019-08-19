@@ -10,7 +10,7 @@
 ?>
 <footer id="nc-system-footer" role="contentinfo">
 	<div class="box-footer">
-		<div class="copyright">Powered by edumap</div>
+		<div class="copyright">Powered by <a href="https://edumap.jp/" target="_blank">edumap</a></div>
 	</div>
 </footer>
 
