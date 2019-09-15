@@ -75,7 +75,7 @@ class PagesLanguageGetPagesLanguageTest extends PagesGetTestCase {
 				'weight' => '1',
 				'sort_key' => '~00000001-00000001-00000001',
 				'child_count' => '0',
-				'permalink' => 'test4', 'slug' => 'test4', 'is_container_fluid' => false, 'theme' => null,
+				'permalink' => 'home/test4', 'slug' => 'test4', 'is_container_fluid' => false, 'theme' => null,
 			),
 			'Language' => array(
 				'id' => '2', 'code' => 'ja', 'weight' => '2', 'is_active' => true,
