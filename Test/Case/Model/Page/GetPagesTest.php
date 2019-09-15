@@ -128,11 +128,11 @@ class PageGetPagesTest extends PagesGetTestCase {
 			array('id' => '2', 'parent_id' => '1'),
 			array('id' => '1', 'room_id' => '2', 'parent_id' => null),
 			array(
-				array('id' => '7', 'room_id' => '2', 'parent_id' => '4', 'permalink' => 'test4')
+				array('id' => '7', 'room_id' => '2', 'parent_id' => '4', 'permalink' => 'home/test4')
 			)
 		);
 		$this->__assertGetPages($result,
-			array('id' => '7', 'permalink' => 'test4'),
+			array('id' => '7', 'permalink' => 'home/test4'),
 			array('id' => '2', 'parent_id' => '1'),
 			array('id' => '4', 'room_id' => '2', 'parent_id' => '1'),
 			array()

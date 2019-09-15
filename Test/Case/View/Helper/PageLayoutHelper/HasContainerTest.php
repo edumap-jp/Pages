@@ -47,7 +47,7 @@ class PageLayoutHelperHasContainerTest extends PagesHelperTestCase {
 		$requestData = array();
 		$params = array();
 
-		$viewVars['page'] = $this->Page->getPageWithFrame('test4', '2');
+		$viewVars['page'] = $this->Page->getPageWithFrame('home/test4', '2');
 		$this->loadHelper('Pages.PageLayout', $viewVars, $requestData, $params);
 
 		$this->PageLayout->containers = Hash::combine(

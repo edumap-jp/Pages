@@ -91,8 +91,8 @@ class PagesRoutingRouteSlugRouteParseTest extends PagesModelTestCase {
 				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array())
 			),
 			// #12
-			array('template' => '/' . Current::SETTING_MODE_WORD . '/*', 'url' => '/setting/test4/',
-				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array('test4'))
+			array('template' => '/' . Current::SETTING_MODE_WORD . '/*', 'url' => '/setting/home/test4/',
+				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array('home', 'test4'))
 			),
 			array('template' => '/' . Current::SETTING_MODE_WORD . '/*', 'url' => '/setting/aaaaa/',
 				'expected' => false
@@ -102,8 +102,8 @@ class PagesRoutingRouteSlugRouteParseTest extends PagesModelTestCase {
 				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array())
 			),
 			// #15
-			array('template' => '/*', 'url' => '/test4/',
-				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array('test4'))
+			array('template' => '/*', 'url' => '/home/test4/',
+				'expected' => array('plugin' => 'pages', 'controller' => 'pages', 'action' => 'index', 'pass' => array('home', 'test4'))
 			),
 			array('template' => '/*', 'url' => '/aaaaa/',
 				'expected' => false
