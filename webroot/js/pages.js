@@ -155,18 +155,19 @@ NetCommonsApp.controller('PagesEditController',
       $scope.saveWeight = function(type, pageId) {
         $scope.$parent.sending = true;
 
-        angular.element('input[name="data[Page][id]"]')[0].value = pageId;
+        var formDomId = '#PageMoveForm';
+        angular.element(formDomId + ' input[name="data[Page][id]"]')[0].value = pageId;
 
-        var key = 'input[name="data[Page][parent_id]"]';
+        var key = formDomId + ' input[name="data[Page][parent_id]"]';
         var parentId = $scope.pages[pageId]['Page']['parent_id'];
         angular.element(key)[0].value = parentId;
 
-        angular.element('input[name="data[Page][type]"]')[0].value = type;
+        angular.element(formDomId + ' input[name="data[Page][type]"]')[0].value = type;
 
         var roomId = $scope.pages[pageId]['Page']['room_id'];
-        angular.element('input[name="data[Page][room_id]"]')[0].value = roomId;
+        angular.element(formDomId + ' input[name="data[Page][room_id]"]')[0].value = roomId;
 
-        var formElement = angular.element('#PageMoveForm');
+        var formElement = angular.element(formDomId);
         formElement[0].submit();
       };
 
