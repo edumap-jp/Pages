@@ -184,7 +184,6 @@ class PagesTreeBehavior extends NetCommonsTreeBehavior {
 
 			$weights[$parentId] = $weight;
 		}
-CakeLog::debug(__METHOD__ . '(' . __LINE__ . ') ' . var_export($recovers, true));
 
 		$this->__updateRecovers($model, $recovers);
 
