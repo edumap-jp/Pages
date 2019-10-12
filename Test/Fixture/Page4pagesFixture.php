@@ -67,7 +67,7 @@ class Page4pagesFixture extends PageFixture {
 			'weight' => '1',
 			'sort_key' => '~00000001-00000001-00000001',
 			'child_count' => '0',
-			'permalink' => 'test4', 'slug' => 'test4',
+			'permalink' => 'home/test4', 'slug' => 'test4',
 		),
 		//パブリックスペースのtest5
 		array(

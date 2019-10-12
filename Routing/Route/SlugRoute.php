@@ -38,7 +38,10 @@ class SlugRoute extends CakeRoute {
  */
 	public function parse($url) {
 		$currentRequest = Router::getRequest(true);
-		$params = parent::parse('/' . $currentRequest->url);
+		if (! empty($currentRequest)) {
+			$url = '/' . $currentRequest->url;
+		}
+		$params = parent::parse($url);
 		if (empty($params)) {
 			return false;
 		}

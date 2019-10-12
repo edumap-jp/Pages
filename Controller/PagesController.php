@@ -75,6 +75,12 @@ class PagesController extends PagesAppController {
 			return $this->redirect('/' . $path);
 		}
 
+		//ページのパーマリンクにjpgやjsonなどを設定した場合に、
+		//各Viewが読み込まれてしまうため、当アクションに入ってきた場合は、強制的にhtmlとして出力する
+		$this->viewPath = 'Pages';
+		$this->layoutPath = null;
+		$this->response->type('html');
+
 		//ページデータの取得
 		$paths = $this->params->params['pass'];
 		$path = implode('/', $paths);
