@@ -95,7 +95,7 @@ class PagesEditHelper extends AppHelper {
 
 		$html .= '<a href="" data-toggle="popover" data-placement="bottom"' .
 					' title="' . __d('mails', 'Embedded keyword?') . '"' . ' data-content="' . $content . '">';
-		$html .= '<span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span>';
+		$html .= '<span class="glyphicon glyphicon-info-sign" aria-hidden="true"></span>';
 		$html .= '</a>';
 		$html .= '<script type="text/javascript">' .
 			'$(function () { $(\'[data-toggle="popover"]\').popover({html: true}) });</script>';
