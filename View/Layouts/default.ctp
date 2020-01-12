@@ -66,7 +66,10 @@ if (AuthComponent::user()) {
 		<?php
 			$trackingId = SiteSettingUtil::read('Matomo.tracking_id');
 			if ($trackingId) {
-				echo $this->element('Pages.matomo_tracking', ['trackingId' => $trackingId]);
+				echo $this->element('Pages.matomo_tracking', [
+					'trackingId' => $trackingId,
+					'matomoUrl' => SiteSettingUtil::read('Matomo.matomo_url', '//analytics.edumap.jp/')
+				]);
 			}
 		?>
 
