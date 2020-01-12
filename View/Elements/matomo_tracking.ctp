@@ -14,7 +14,7 @@
   _paq.push(['trackPageView']);
   _paq.push(['enableLinkTracking']);
   (function() {
-    var u=<?php echo h($matomoUrl); ?>;
+    var u='<?php echo h($matomoUrl); ?>';
     _paq.push(['setTrackerUrl', u+'matomo.php']);
     _paq.push(['setSiteId', '<?php echo h($trackingId); ?>']);
     var d=document, g=d.createElement('script'), s=d.getElementsByTagName('script')[0];
