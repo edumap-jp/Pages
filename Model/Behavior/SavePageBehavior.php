@@ -282,12 +282,12 @@ class SavePageBehavior extends ModelBehavior {
 			'order' => array('sort_key' => 'asc'),
 		));
 
-		if ($first['Page']['id'] === $data[$model->alias]['id']) {
+		//if ($first['Page']['id'] === $data[$model->alias]['id']) {
 			$model->Room->id = Space::getRoomIdRoot(Space::PUBLIC_SPACE_ID);
 			if (! $model->Room->saveField('page_id_top', $first['Page']['id'], ['callbacks' => false])) {
 				throw new InternalErrorException(__d('net_commons', 'Internal Server Error'));
 			}
-		}
+		//}
 
 		return true;
 	}
