@@ -4,6 +4,7 @@
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
+ * @author Kazunori Sakamoto <exkazuu@willboostr.com>
  * @link http://www.netcommons.org NetCommons Project
  * @license http://www.netcommons.org/license.txt NetCommons License
  * @copyright Copyright 2014, NetCommons Project
@@ -52,7 +53,7 @@ $nonCached = $this->response->header()['Pragma'] === 'no-cache' ||
 		<?php echo $this->element('NetCommons.common_header'); ?>
 
 		<main id="nc-container" class="<?php echo $pageContainerCss; ?>" ng-init="hashChange();
-			<?php echo ($nonCached ? '' : 'updateTokens();'); ?>">
+			<?php echo $this->CDNCache->isCacheable() ? 'updateTokens();' : ''; ?>">
 
 			<?php echo $pageHeader; ?>
 
