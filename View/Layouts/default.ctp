@@ -20,6 +20,9 @@ if (AuthComponent::user()) {
 } else {
 	$bodyCss .= ' body-nologgedin';
 }
+
+$nonCached = $this->response->header()['Pragma'] === 'no-cache' ||
+    strncmp('origin-', $_SERVER['SERVER_NAME'], 7) !== 0;
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo Configure::read('Config.language') ?>" ng-app="NetCommonsApp">
@@ -39,7 +42,7 @@ if (AuthComponent::user()) {
 			echo $this->element('NetCommons.common_theme_css');
 
 			echo $this->element('NetCommons.common_js');
-			echo $this->element('Wysiwyg.mathjax_js');
+			//echo $this->element('Wysiwyg.mathjax_js');
 			echo $this->fetch('script');
 		?>
 	</head>
@@ -47,7 +50,10 @@ if (AuthComponent::user()) {
 	<body class="<?php echo $bodyCss; ?>" ng-controller="NetCommons.base">
 		<?php echo $this->Flash->render(); ?>
 
-		<?php echo $this->element('NetCommons.common_header'); ?>
+		<?php echo $this->element('NetCommons.common_header', ['navbarStyle' => 'navbar-default']); ?>
+
+		<main id="nc-container" class="<?php echo $pageContainerCss; ?>" ng-init="hashChange();
+			<?php echo ($nonCached ? '' : 'updateTokens();'); ?>">
 
 		<main id="nc-container" class="<?php echo $pageContainerCss; ?>" ng-init="hashChange();
 			<?php echo $this->CDNCache->isCacheable() ? 'updateTokens();' : ''; ?>">
@@ -65,7 +71,16 @@ if (AuthComponent::user()) {
 			<?php echo $pageFooter; ?>
 		</main>
 
-		<?php echo $this->element('NetCommons.common_footer'); ?>
+		<?php echo $this->element('Pages.common_footer'); ?>
+		<?php
+			$trackingId = SiteSettingUtil::read('Matomo.tracking_id');
+			if ($trackingId) {
+				echo $this->element('Pages.matomo_tracking', [
+					'trackingId' => $trackingId,
+					'matomoUrl' => SiteSettingUtil::read('Matomo.matomo_url', '//analytics.edumap.jp/')
+				]);
+			}
+		?>
 
 		<?php if (!empty($modal)) : ?>
 			<div class="modal-backdrop fade in"></div>

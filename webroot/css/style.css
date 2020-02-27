@@ -6,6 +6,11 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
 
+/* ※TODO: NC3全体に適用した方が良いかも。 */
+body {
+    font-family: 'Hiragino Kaku Gothic ProN', 'ヒラギノ角ゴ ProN W3', Meiryo, メイリオ, Osaka, 'MS PGothic', arial, helvetica, sans-serif;
+}
+
 .pages-tree {
 	margin-left: 10px;
 	margin-right: 10px;

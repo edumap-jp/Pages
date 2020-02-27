@@ -25,6 +25,12 @@ App::uses('NetCommonsCDNCache', 'NetCommons.Utility');
  * @package NetCommons\Pages\Controller
  */
 class PagesController extends PagesAppController {
+/**
+ * 高頻度なキャッシュ無効化を防ぐために、無効化のリクエストを無視する期間（秒）
+ *
+ * @var float
+ */
+	const NO_CACHE_INVALIDATION_DURATION_SEC = 1.0;
 
 /**
  * 使用するModels
