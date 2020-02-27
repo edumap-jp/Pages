@@ -20,9 +20,6 @@ if (AuthComponent::user()) {
 } else {
 	$bodyCss .= ' body-nologgedin';
 }
-
-$nonCached = $this->response->header()['Pragma'] === 'no-cache' ||
-    strncmp('origin-', $_SERVER['SERVER_NAME'], 7) !== 0;
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo Configure::read('Config.language') ?>" ng-app="NetCommonsApp">
