@@ -25,6 +25,7 @@ App::uses('NetCommonsCDNCache', 'NetCommons.Utility');
  * @package NetCommons\Pages\Controller
  */
 class PagesController extends PagesAppController {
+
 /**
  * 使用するModels
  *
