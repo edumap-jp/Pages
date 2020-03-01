@@ -19,9 +19,6 @@ if (AuthComponent::user()) {
 } else {
 	$bodyCss .= ' body-nologgedin';
 }
-
-$nonCached = $this->response->header()['Pragma'] === 'no-cache' ||
-    strncmp('origin-', $_SERVER['SERVER_NAME'], 7) !== 0;
 ?>
 <!DOCTYPE html>
 <html lang="<?php echo Configure::read('Config.language') ?>" ng-app="NetCommonsApp">
@@ -52,7 +49,7 @@ $nonCached = $this->response->header()['Pragma'] === 'no-cache' ||
 		<?php echo $this->element('NetCommons.common_header'); ?>
 
 		<main id="nc-container" class="<?php echo $pageContainerCss; ?>" ng-init="hashChange();
-			<?php echo ($nonCached ? '' : 'updateTokens();'); ?>">
+			<?php echo $this->CDNCache->isCacheable() ? 'updateTokens();' : ''; ?>">
 
 			<?php echo $pageHeader; ?>
 
