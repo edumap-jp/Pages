@@ -48,7 +48,9 @@ if (AuthComponent::user()) {
 
 		<?php echo $this->element('NetCommons.common_header', ['navbarStyle' => 'navbar-default']); ?>
 
-		<main id="nc-container" class="<?php echo $pageContainerCss; ?>" ng-init="hashChange()">
+		<main id="nc-container" class="<?php echo $pageContainerCss; ?>" ng-init="hashChange();
+			<?php echo $this->CDNCache->isCacheable() ? 'updateTokens();' : ''; ?>">
+
 			<?php echo $pageHeader; ?>
 
 			<div class="row">

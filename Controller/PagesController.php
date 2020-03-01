@@ -5,6 +5,8 @@
  * @copyright Copyright 2014, NetCommons Project
  * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
+ * @author Wataru Nishimoto <watura@willbooster.com>
+ * @author Kazunori Sakamoto <exkazuu@willbooster.com>
  * @link http://www.netcommons.org NetCommons Project
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
@@ -13,12 +15,15 @@ App::uses('PagesAppController', 'Pages.Controller');
 App::uses('Space', 'Rooms.Model');
 App::uses('NetCommonsUrl', 'NetCommons.Utility');
 App::uses('CurrentLibPage', 'NetCommons.Lib/Current');
+App::uses('NetCommonsCDNCache', 'NetCommons.Utility');
 
 /**
  * ページ表示 Controller
  *
  * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
+ * @author Wataru Nishimoto <watura@willbooster.com>
+ * @author Kazunori Sakamoto <exkazuu@willbooster.com>
  * @package NetCommons\Pages\Controller
  */
 class PagesController extends PagesAppController {
@@ -52,6 +57,7 @@ class PagesController extends PagesAppController {
  * @return void
  */
 	public function beforeFilter() {
+		$this->Auth->allow('clear');
 		//CurrentPage::__getPageConditionsでページ表示として扱う
 		if ($this->params['action'] === 'index') {
 			$this->request->params['pageView'] = true;
@@ -118,6 +124,17 @@ class PagesController extends PagesAppController {
 			$redirectUrl = NetCommonsUrl::backToPageUrl();
 		}
 		$this->redirect($redirectUrl);
+	}
+
+/**
+ * CDN Cache を削除する
+ *
+ * @return void
+ */
+	public function clear() {
+		$cdnCache = new NetCommonsCDNCache();
+		$cdnCache->invalidate();
+		$this->redirect('/');
 	}
 
 }
