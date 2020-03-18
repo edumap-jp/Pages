@@ -4,6 +4,7 @@
  *
  * @author Noriko Arai <arai@nii.ac.jp>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
+ * @author Kazunori Sakamoto <exkazuu@willbooster.com>
  * @link http://www.netcommons.org NetCommons Project
  * @license http://www.netcommons.org/license.txt NetCommons License
  * @copyright Copyright 2014, NetCommons Project
@@ -49,7 +50,7 @@ if (AuthComponent::user()) {
 		<?php echo $this->element('NetCommons.common_header', ['navbarStyle' => 'navbar-default']); ?>
 
 		<main id="nc-container" class="<?php echo $pageContainerCss; ?>" ng-init="hashChange();
-			<?php echo $this->CDNCache->isCacheable() ? 'updateTokens();' : ''; ?>">
+			<?php echo $this->CDNCache->isCacheable() ? 'updateTokens();' : ''; ?> updateLikes();">
 
 			<?php echo $pageHeader; ?>
 
