@@ -58,7 +58,7 @@ class PagesEditHelper extends AppHelper {
 		);
 		$files = $dir->find('.*\.png', true);
 
-		$usageLimit = ! SiteSettingUtil::read('App.usage_limit');
+		$usageLimit = ! SiteSettingUtil::read('App.display_ads');
 		foreach ($files as $i => $file) {
 			if (! $usageLimit &&
 					preg_match('/^[0-1]_0_0_[0-1]\.png$/', $file)) {
