@@ -49,8 +49,7 @@ if (AuthComponent::user()) {
 
 		<?php echo $this->element('NetCommons.common_header', ['navbarStyle' => 'navbar-default']); ?>
 
-		<main id="nc-container" class="<?php echo $pageContainerCss; ?>" ng-init="hashChange();
-			<?php echo $this->CDNCache->isCacheable() ? 'updateTokens();' : ''; ?> updateLikes();">
+		<main id="nc-container" class="<?php echo $pageContainerCss; ?>" ng-init="hashChange();">
 
 			<?php echo $pageHeader; ?>
 
@@ -66,6 +65,8 @@ if (AuthComponent::user()) {
 		</main>
 
 		<?php echo $this->element('Pages.common_footer'); ?>
+		<div ng-init="<?php echo $this->CDNCache->isCacheable() ? 'updateTokens();' : ''; ?> updateLikes();"></div>
+
 		<?php
 			$trackingId = SiteSettingUtil::read('Matomo.tracking_id');
 			if ($trackingId) {
