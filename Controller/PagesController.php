@@ -5,6 +5,8 @@
  * @copyright Copyright 2014, NetCommons Project
  * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
+ * @author Wataru Nishimoto <watura@willbooster.com>
+ * @author Kazunori Sakamoto <exkazuu@willbooster.com>
  * @link http://www.netcommons.org NetCommons Project
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
@@ -13,7 +15,6 @@ App::uses('PagesAppController', 'Pages.Controller');
 App::uses('Space', 'Rooms.Model');
 App::uses('NetCommonsUrl', 'NetCommons.Utility');
 App::uses('CurrentLibPage', 'NetCommons.Lib/Current');
-App::uses('NetCommonsCache', 'NetCommons.Utility');
 App::uses('NetCommonsCDNCache', 'NetCommons.Utility');
 
 /**
@@ -21,15 +22,11 @@ App::uses('NetCommonsCDNCache', 'NetCommons.Utility');
  *
  * @author Kohei Teraguchi <kteraguchi@commonsnet.org>
  * @author Shohei Nakajima <nakajimashouhei@gmail.com>
+ * @author Wataru Nishimoto <watura@willbooster.com>
+ * @author Kazunori Sakamoto <exkazuu@willbooster.com>
  * @package NetCommons\Pages\Controller
  */
 class PagesController extends PagesAppController {
-/**
- * 高頻度なキャッシュ無効化を防ぐために、無効化のリクエストを無視する期間（秒）
- *
- * @var float
- */
-	const NO_CACHE_INVALIDATION_DURATION_SEC = 1.0;
 
 /**
  * 使用するModels
@@ -135,14 +132,8 @@ class PagesController extends PagesAppController {
  * @return void
  */
 	public function clear() {
-		$ncCache = new NetCommonsCache('cache_invalidated_at', false, 'netcommons_core');
-		$lastTime = floatval($ncCache->read());
-		$now = microtime(true);
-		if ($now - $lastTime > self::NO_CACHE_INVALIDATION_DURATION_SEC) {
-			$ncCache->write($now);
-			$cdnCache = new NetCommonsCDNCache();
-			$cdnCache->invalidate();
-		}
+		$cdnCache = new NetCommonsCDNCache();
+		$cdnCache->invalidate();
 		$this->redirect('/');
 	}
 
