@@ -16,7 +16,7 @@
 
 <?php echo $this->NetCommonsForm->create('PagesLanguage', array(
 		'type' => 'post',
-		'url' => NetCommonsUrl::actionUrlAsArray(array('action' => 'add_m17n'))
+		'url' => NetCommonsUrl::actionUrlAsArray(array('action' => 'add_m17n', 'key' => Current::read('Room.id'), Current::read('Page.id')))
 	)); ?>
 
 	<?php echo $this->NetCommonsForm->hidden('_NetCommonsUrl.redirect'); ?>
