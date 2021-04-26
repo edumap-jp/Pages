@@ -8,7 +8,7 @@
  * @license http://www.netcommons.org/license.txt NetCommons License
  */
 if (empty($matomoUrl)) {
-	$matomoUrl = '//analytics.edumap.jp/';
+	$matomoUrl = SiteSettingUtil::read('Matomo.matomo_url', '//analytics.edumap.jp/');
 }
 ?>
 
